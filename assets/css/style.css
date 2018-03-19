@@ -1,50 +1,55 @@
+.container {
+    background-color: rgb(240, 222, 225);
+    width: 960px;
+    border-radius: 10px;
+}
 
+.row2 {
+    background-color: rgb(240, 222, 225);
+}
 
+.btn-lg {
+    padding: 8px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 12px;
+  }
+  
+  .btn-sm,
+  .btn-xs {
+    padding: 4px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 6px;
+  }
 
-    button,
-    div,
-    form,
-    input {
-      margin: 10px;
-    }
+p {
+    color   :   Black;
+    font-weight: bold;
+}
 
-
-
-span {
-    background-color:lightgray;
+.row1 {
+    margin-top: 4px;
+    margin-bottom: 30px;
 }
 
 button {
-    background: lightgray;
+  margin: 4px;
 }
 
-.jumbotron{
-    background-color: lightgray;
+hr {
+    border-width: 3px;
+}
+input {
+    width: 10px;
 }
 
-.input-bar {
-    display: table;
-    width: 100%;
+#results-view {
+    border-right:1px solid white;
+    min-height: 650px;
 }
 
-.input-bar-item {
-    display: table-cell;
+img{
+    max-height: 100px;
+    max-width: 100%;
 }
-
-.input-bar-item > button {
-    margin-left: 5px;
-}
-
-.width100 {
-  width: 100%;
-}
-
-/* .btn-primary {
-    background: lightgray;
-    color: #ffffff;
-} */
-
-/* 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: lightgray !important;
-} */
