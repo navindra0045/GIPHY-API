@@ -1,0 +1,50 @@
+
+
+
+    button,
+    div,
+    form,
+    input {
+      margin: 10px;
+    }
+
+
+
+span {
+    background-color:lightgray;
+}
+
+button {
+    background: lightgray;
+}
+
+.jumbotron{
+    background-color: lightgray;
+}
+
+.input-bar {
+    display: table;
+    width: 100%;
+}
+
+.input-bar-item {
+    display: table-cell;
+}
+
+.input-bar-item > button {
+    margin-left: 5px;
+}
+
+.width100 {
+  width: 100%;
+}
+
+/* .btn-primary {
+    background: lightgray;
+    color: #ffffff;
+} */
+
+/* 
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: lightgray !important;
+} */

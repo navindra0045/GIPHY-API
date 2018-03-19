@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Favorite Movies</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+        crossorigin="anonymous">
+    <link href="assets/css/style2.css" rel="stylesheet">
+</head>
+
+<div class="container">
+    <div class="border" class="rounded-top">
+        <div class="row1">
+            <div id="buttons-view">
+            </div>
+
+        </div>
+
+        <div class="row2">
+            <hr>
+            <div class="col-xs-6 col-sm-8 col-md-9 col-lg-9" style="border-right:1px solid white;">
+              
+                <div class="row" id="results-view" >
+                    
+               </div>
+
+            </div>
+
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3" id="right-pane">
+                <div class="form-group">
+                    <label for="add-image-input">
+                        <b>Add a Search Button</b>
+                    </label>
+                    <input type="text" class="form-control" id="add-image-input">
+                    <button type="button" class="btn btn-danger btn-sm" id="add-image-button">Submit</button>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        var topics = ["dog", "cat", "snake"]
+
+
+
+        function renderButtons() {
+
+            // Deleting the movies prior to adding new movies
+            // (this is necessary otherwise you will have repeat buttons)
+            $("#buttons-view").empty();
+
+            // Looping through the array of movies
+            for (var i = 0; i < topics.length; i++) {
+                // Then dynamicaly generating buttons for each movie in the array
+                // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+                if (topics[i] != "") {
+                    var a = $("<button>");
+                    // Adding a class of movie-btn to our button
+                    a.addClass("image-btn");
+                    a.addClass("btn btn-danger");
+                    a.addClass("btn-sm");
+                    // Adding a data-attribute
+                    a.attr("data-name", topics[i]);
+                    // Providing the initial button text
+                    a.text(topics[i]);
+                    // Adding the button to the buttons-view div
+                    $("#buttons-view").append(a);
+                }
+            }
+        }
+
+        function displayImageResults() {
+            //console.log("HELLO FOLKS");
+
+            var image = $(this).attr("data-name");
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+                image + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+            // Creating an AJAX call for the specific movie button being clicked
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                
+                // storing the data from the AJAX request in the results variable
+                var results = response.data;
+                //$("#results-view").empty();
+                // Looping through each result item
+                for (var i = 0; i < results.length; i++) {
+
+                    // Creating and storing a div tag
+                    var resultsDiv = $("<div>");
+                    // Creating a paragraph tag with the result item's rating
+                    var p = $("<p>").text("Rating: " + results[i].rating);
+
+                    var resultImage = $("<img>");
+                    // Setting the src attribute of the image to a property pulled off the result item
+                    resultImage.attr("src", results[i].images.fixed_height_still.url);
+                    resultImage.attr("data-still", results[i].images.fixed_height.url);
+                    resultImage.attr("data-animate", results[i].images.fixed_height_still.url);
+                    resultImage.attr("data-state", "animate");
+                    resultImage.addClass("gif");
+
+                    // Appending the paragraph and image tag to the animalDiv
+                    
+                    resultsDiv.append(p);
+                    resultsDiv.append(resultImage);
+                    resultsDiv.addClass("col-lg-3 col-md-3");
+                
+                    $("#results-view").append(resultsDiv);
+                 
+                }
+
+            });
+
+        }
+
+
+        $("#add-image-button").on("click", function (event) {
+            event.preventDefault();
+            // This line grabs the input from the textbox
+            var topic = $("#add-image-input").val().trim();
+
+            // Adding movie from the textbox to our array
+            topics.push(topic);
+
+            // Calling renderButtons which handles the processing of our movie array
+            renderButtons();
+        });
+
+        $(document).on("click", ".image-btn", displayImageResults);
+
+        $("#add-image-input").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#add-image-button").click();
+            }
+        });
+
+
+        $("body").on("click", ".gif", function () {
+            // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+           console.log("CLICKED ON A GIF!!!!!!!");
+
+            var state = $(this).attr("data-state");
+            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+            // Then, set the image's data-state to animate
+            // Else set src to the data-still value
+            if (state === "still") {
+                $(this).attr("src", $(this).attr("data-animate"));
+                $(this).attr("data-state", "animate");
+            } else {
+                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr("data-state", "still");
+            }
+        });
+
+        renderButtons();
+
+    </script>
+
+</body>
